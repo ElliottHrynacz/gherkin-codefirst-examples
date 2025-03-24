@@ -1,0 +1,25 @@
+{
+  "name": "gherkin-codefirst-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElliottHrynacz/gherkin-codefirst-examples.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElliottHrynacz/gherkin-codefirst-examples/issues"
+  },
+  "homepage": "https://github.com/ElliottHrynacz/gherkin-codefirst-examples#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^22.13.13"
+  }
+}
