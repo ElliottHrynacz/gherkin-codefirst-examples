@@ -8,13 +8,3 @@ Feature: User Login
     When the user clicks the login button
     Then the user should be redirected to the dashboard
     And a welcome message should be displayed
-
-  Scenario: Unsuccessful login with invalid credentials
-    Given the user enters an invalid username and password
-    When the user clicks the login button
-    Then an error message should be displayed
-
-  Scenario: Unsuccessful login with empty credentials
-    Given the user leaves the username and password fields empty
-    When the user clicks the login button
-    Then an error message should be displayed

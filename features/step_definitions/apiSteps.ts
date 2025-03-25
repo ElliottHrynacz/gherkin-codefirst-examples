@@ -1,5 +1,4 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
-const { expect, request } = require('@playwright/test');
+const { request } = require('@playwright/test');
 
 let baseURL;
 let response;
