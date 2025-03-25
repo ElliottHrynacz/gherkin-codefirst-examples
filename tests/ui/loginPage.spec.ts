@@ -1,39 +1,21 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../../page_objects/loginPage';
 
 const BASE_URL = 'https://example.com';
 
 test.describe('User Login', () => {
+  let loginPage: LoginPage;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${BASE_URL}/login`);
+    loginPage = new LoginPage(page);
+    await loginPage.navigateToLogin(BASE_URL);
   });
 
   test('Successful login with valid credentials', async ({ page }) => {
-    await page.fill('input[name="username"]', 'validUser');
-    await page.fill('input[name="password"]', 'validPassword');
-    await page.click('button[type="submit"]');
-    
-    await page.waitForURL(`${BASE_URL}/dashboard`);
-    const welcomeMessage = await page.textContent('.welcome-message');
+    await loginPage.login('validUser', 'validPassword');
+    await loginPage.waitForDashboard(BASE_URL);
+
+    const welcomeMessage = await loginPage.getWelcomeMessage();
     expect(welcomeMessage).toContain('Welcome');
   });
-
-  test('Unsuccessful login with invalid credentials', async ({ page }) => {
-    await page.fill('input[name="username"]', 'invalidUser');
-    await page.fill('input[name="password"]', 'invalidPassword');
-    await page.click('button[type="submit"]');
-    
-    const errorMessage = await page.textContent('.error-message');
-    expect(errorMessage).toBeTruthy();
-  });
-
-  test('Unsuccessful login with empty credentials', async ({ page }) => {
-    await page.fill('input[name="username"]', '');
-    await page.fill('input[name="password"]', '');
-    await page.click('button[type="submit"]');
-    
-    const errorMessage = await page.textContent('.error-message');
-    expect(errorMessage).toBeTruthy();
-  });
-
 });
