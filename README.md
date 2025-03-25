@@ -15,4 +15,4 @@ The same tests written directly in code (using Playwright) without the need for 
 
  
 ## Supporting Blog
-If you're interested in reading more about my experiences with Gherkin vs. code-first automation, check out my blog:
+If you're interested in reading more about my experiences with Gherkin vs. code-first automation, check out my article on LinkedIn: [Gherkin vs Code-First Test Automation](https://www.linkedin.com/pulse/cutting-through-noise-case-against-gherkin-elliott-hrynacz-6gruc)
