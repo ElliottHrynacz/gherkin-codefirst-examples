@@ -1,6 +1,5 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
-const { expect } = require('@playwright/test');
-const axios = require('axios');
+const { expect, request } = require('@playwright/test');
 
 let baseURL;
 let response;
@@ -15,28 +14,32 @@ Given('the request payload is:', function (docString) {
 });
 
 When('I send a GET request to {string}', async function (endpoint) {
-  response = await axios.get(baseURL + endpoint);
+  const apiContext = await request.newContext();
+  response = await apiContext.get(baseURL + endpoint);
 });
 
 When('I send a POST request to {string} with the payload', async function (endpoint) {
-  response = await axios.post(baseURL + endpoint, payload);
+  const apiContext = await request.newContext();
+  response = await apiContext.post(baseURL + endpoint, { data: payload });
 });
 
 Then('the response status code should be {int}', function (statusCode) {
-  expect(response.status).toBe(statusCode);
+  expect(response.status()).toBe(statusCode);
 });
 
-Then('the response should contain a list of fruits', function () {
-  expect(Array.isArray(response.data)).toBe(true);
+Then('the response should contain a list of fruits', async function () {
+  const responseBody = await response.json();
+  expect(Array.isArray(responseBody)).toBe(true);
 });
 
-Then('the list should include {string} and {string}', function (fruit1, fruit2) {
-  const fruitNames = response.data.map(fruit => fruit.name);
-  expect(fruitNames).toContain(fruit1);
-  expect(fruitNames).toContain(fruit2);
-});
-
-Then('the response should contain:', function (docString) {
+Then('the response should contain:', async function (docString) {
   const expectedResponse = JSON.parse(docString);
-  expect(response.data).toMatchObject(expectedResponse);
+  const responseBody = await response.json();
+  expect(responseBody).toEqual(expectedResponse);
+});
+
+Then('the list should include {string} and {string}', async function (fruit1, fruit2) {
+  const responseBody = await response.json();
+  expect(responseBody).toContain(fruit1);
+  expect(responseBody).toContain(fruit2);
 });
